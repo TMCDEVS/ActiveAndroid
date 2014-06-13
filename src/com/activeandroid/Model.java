@@ -242,7 +242,9 @@ public abstract class Model {
 					final long entityId = cursor.getLong(columnIndex);
 					final Class<? extends Model> entityType = (Class<? extends Model>) fieldType;
 
-					Model entity = Cache.getEntity(entityType, entityId);
+// @JE: Avoiding cache hits due to DDBB inconsistencies with 'Id' fields and PK
+//					Model entity = Cache.getEntity(entityType, entityId);
+                    Model entity = null;
 					if (entity == null) {
 						entity = new Select().from(entityType).where(idName+"=?", entityId).executeSingle();
 					}

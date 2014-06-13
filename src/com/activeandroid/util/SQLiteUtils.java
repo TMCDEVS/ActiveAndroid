@@ -336,7 +336,9 @@ public final class SQLiteUtils {
                  */
                 List<String> columnsOrdered = new ArrayList<String>(Arrays.asList(cursor.getColumnNames()));
 				do {
-					Model entity = Cache.getEntity(type, cursor.getLong(columnsOrdered.indexOf(idName)));
+//                  @JE: Avoiding cache hits due to DDBB inconsistencies with 'Id' fields and PK
+//					Model entity = Cache.getEntity(type, cursor.getLong(columnsOrdered.indexOf(idName)));
+                    Model entity = null;
 					if (entity == null) {
 						entity = (T) entityConstructor.newInstance();
 					}
